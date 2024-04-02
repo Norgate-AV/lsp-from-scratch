@@ -10,12 +10,21 @@ interface InitializeResult {
     };
 }
 
-export const initialize = (message: RequestMessage): InitializeResult => {
+export function initialize(message: RequestMessage): InitializeResult {
     return {
-        capabilities: {},
+        capabilities: {
+            completionProvider: {},
+            textDocumentSync: 1,
+            diagnosticProvider: {
+                interFileDependencies: false,
+                workspaceDiagnostics: false,
+            },
+            codeActionProvider: true,
+            hoverProvider: true,
+        },
         serverInfo: {
             name: "lsp-from-scratch",
             version: "0.0.1",
         },
     };
-};
+}

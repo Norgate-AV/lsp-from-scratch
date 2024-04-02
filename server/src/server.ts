@@ -1,23 +1,32 @@
 import log from "./log";
+import { exit } from "./methods/exit";
 import { initialize } from "./methods/initialize";
+import { shutdown } from "./methods/shutdown";
 
 interface Message {
     jsonrpc: string;
 }
 
-export interface RequestMessage extends Message {
-    id: number | string;
+export interface NotificationMessage extends Message {
     method: string;
     params?: Array<unknown> | object;
 }
 
-type RequestMethod = (message: RequestMessage) => object;
+export interface RequestMessage extends NotificationMessage {
+    id: number | string;
+}
 
-const methods: Record<string, RequestMethod> = {
+type NotificationMethod = (message: NotificationMessage) => void;
+
+type RequestMethod = (message: RequestMessage) => ReturnType<typeof initialize>;
+
+const methods: Record<string, RequestMethod | NotificationMethod> = {
+    exit,
     initialize,
+    shutdown,
 };
 
-const respond = (id: RequestMessage["id"], result: unknown) => {
+function respond(id: RequestMessage["id"], result: unknown) {
     const message = JSON.stringify({ id, result });
     const length = Buffer.byteLength(message, "utf-8");
     const header = `Content-Length: ${length}\r\n\r\n`;
@@ -26,7 +35,7 @@ const respond = (id: RequestMessage["id"], result: unknown) => {
 
     log.write(payload);
     process.stdout.write(payload);
-};
+}
 
 let buffer = "";
 process.stdin.on("data", (chunk) => {
@@ -55,7 +64,11 @@ process.stdin.on("data", (chunk) => {
         const method = methods[message.method];
 
         if (method) {
-            respond(message.id, method(message));
+            const result = method(message);
+
+            if (result !== undefined) {
+                respond(message.id, result);
+            }
         }
 
         buffer = buffer.slice(start + length);
