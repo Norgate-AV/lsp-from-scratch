@@ -2,6 +2,9 @@ import log from "./log";
 import { exit } from "./methods/exit";
 import { initialize } from "./methods/initialize";
 import { shutdown } from "./methods/shutdown";
+import { diagnostic } from "./methods/textDocument/diagnostic";
+import { didChange } from "./methods/textDocument/didChange";
+import { didOpen } from "./methods/textDocument/didOpen";
 
 interface Message {
     jsonrpc: string;
@@ -18,12 +21,17 @@ export interface RequestMessage extends NotificationMessage {
 
 type NotificationMethod = (message: NotificationMessage) => void;
 
-type RequestMethod = (message: RequestMessage) => ReturnType<typeof initialize>;
+type RequestMethod = (
+    message: RequestMessage
+) => ReturnType<typeof initialize> | ReturnType<typeof diagnostic>;
 
 const methods: Record<string, RequestMethod | NotificationMethod> = {
     exit,
     initialize,
     shutdown,
+    "textDocument/didChange": didChange,
+    "textDocument/didOpen": didOpen,
+    "textDocument/diagnostic": diagnostic,
 };
 
 function respond(id: RequestMessage["id"], result: unknown) {
