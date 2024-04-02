@@ -18,8 +18,8 @@
     },
     "scripts": {
         "vscode:prepublish": "pnpm compile",
-        "compile": "tsc -b",
-        "watch": "tsc -b -w",
+        "compile": "tsc",
+        "watch": "tsc -w",
         "postinstall": "cd client && pnpm install && cd ../server && pnpm install && cd .."
     },
     "devDependencies": {
