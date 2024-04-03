@@ -18,52 +18,35 @@
     "devDependencies": {
         "@types/vscode": "^1.81.0"
     },
+    "activationEvents": [
+        "onLanguage:netlinx-source"
+    ],
     "contributes": {
         "languages": [
-			{
-				"id": "netlinx-source",
-				"aliases": [
-					"AMX Netlinx Source"
-				],
-				"extensions": [
-					".axs",
-					".axi"
-				],
-				"configuration": "./language-configuration.json"
-			},
-			{
-				"id": "netlinx-library",
-				"aliases": [
-					"AMX Netlinx Library"
-				],
-				"extensions": [
-					".axb",
-					".lib"
-				],
-				"configuration": "./language-configuration.json"
-			}
-		],
-		"grammars": [
-			{
-				"language": "netlinx-source",
-				"scopeName": "source.netlinx",
-				"path": "./syntaxes/amx-netlinx.tmLanguage.json"
-			},
-			{
-				"language": "netlinx-library",
-				"scopeName": "source.netlinx",
-				"path": "./syntaxes/amx-netlinx.tmLanguage.json"
-			}
-		],
-		"snippets": [
-			{
-				"language": "netlinx-source",
-				"path": "./snippets/snippets.json"
-			},
-			{
-				"language": "netlinx-library",
-				"path": "./snippets/snippets.json"
-			}
-		]
+            {
+                "id": "netlinx-source",
+                "aliases": [
+                    "AMX Netlinx Source"
+                ],
+                "extensions": [
+                    ".axs",
+                    ".axi"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "netlinx-source",
+                "scopeName": "source.netlinx",
+                "path": "./syntaxes/amx-netlinx.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "netlinx-source",
+                "path": "./snippets/snippets.json"
+            }
+        ]
     }
 }
