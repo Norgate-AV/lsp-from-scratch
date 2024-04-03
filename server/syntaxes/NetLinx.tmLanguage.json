@@ -1,40 +1,25 @@
 {
-    "fileTypes": ["axs", "axi"],
+    "fileTypes": [
+        "axs",
+        "axi"
+    ],
     "firstLineMatch": "-[*]-( Mode:)? C -[*]-",
     "foldingStartMarker": "(?x)\n\t\t /\\*\\*(?!\\*)\n\t\t|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*/.*?\\{)).*?\\{\\s*($|//|/\\*(?!.*?\\*/.*\\S))\n\t",
     "foldingStopMarker": "(?<!\\*)\\*\\*/|^\\s*\\}",
     "keyEquivalent": "^~C",
     "name": "NetLinx",
     "patterns": [
-        {
-            "include": "#preprocessor-rule-enabled"
-        },
-        {
-            "include": "#preprocessor-rule-disabled"
-        },
-        {
-            "include": "#preprocessor-rule-other"
-        },
-        {
-            "include": "#comments"
-        },
+        { "include": "#preprocessor-rule-enabled" },
+        { "include": "#preprocessor-rule-disabled" },
+        { "include": "#preprocessor-rule-other" },
+        { "include": "#comments" },
         {
             "captures": {
-                "1": {
-                    "name": "constant.numeric.dps.device.netlinx"
-                },
-                "2": {
-                    "name": "punctuation.colon.dps.netlinx"
-                },
-                "3": {
-                    "name": "constant.numeric.dps.port.netlinx"
-                },
-                "4": {
-                    "name": "punctuation.colon.dps.netlinx"
-                },
-                "5": {
-                    "name": "constant.numeric.dps.system.netlinx"
-                }
+                "1": { "name": "constant.numeric.dps.device.netlinx" },
+                "2": { "name": "punctuation.colon.dps.netlinx" },
+                "3": { "name": "constant.numeric.dps.port.netlinx" },
+                "4": { "name": "punctuation.colon.dps.netlinx" },
+                "5": { "name": "constant.numeric.dps.system.netlinx" }
             },
             "comment": "Device Number",
             "match": "(\\d{1,5})(:)(\\d{1,5})(:)(\\d{1,5})",
@@ -51,44 +36,22 @@
         },
         {
             "begin": "'",
-            "beginCaptures": {
-                "0": {
-                    "name": "punctuation.definition.string.begin.netlinx"
-                }
-            },
+            "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.netlinx" } },
             "comment": "single quoted string",
             "end": "'",
-            "endCaptures": {
-                "0": {
-                    "name": "punctuation.definition.string.end.netlinx"
-                }
-            },
+            "endCaptures": { "0": { "name": "punctuation.definition.string.end.netlinx" } },
             "name": "string.quoted.single.netlinx"
         },
         {
             "begin": "(?ix)\n        \t\t^\\s*(\\#(define))\\s+             # define\n        \t\t((?<id>[a-zA-Z_][a-zA-Z0-9_]*))  # macro name\n        \t\t(?:                              # and optionally:\n        \t\t    (\\()                         # an open parenthesis\n        \t\t        (\n        \t\t            \\s* \\g<id> \\s*       # first argument\n        \t\t            ((,) \\s* \\g<id> \\s*)*  # additional arguments\n        \t\t            (?:\\.\\.\\.)?          # varargs ellipsis?\n        \t\t        )\n        \t\t    (\\))                         # a close parenthesis\n        \t\t)?\n        \t",
             "beginCaptures": {
-                "1": {
-                    "name": "keyword.control.import.define.netlinx"
-                },
-                "2": {
-                    "name": "keyword.control.import.define.netlinx"
-                },
-                "3": {
-                    "name": "entity.name.function.preprocessor.netlinx"
-                },
-                "5": {
-                    "name": "punctuation.definition.parameters.netlinx"
-                },
-                "6": {
-                    "name": "variable.parameter.preprocessor.netlinx"
-                },
-                "8": {
-                    "name": "punctuation.separator.parameters.netlinx"
-                },
-                "9": {
-                    "name": "punctuation.definition.parameters.netlinx"
-                }
+                "1": { "name": "keyword.control.import.define.netlinx" },
+                "2": { "name": "keyword.control.import.define.netlinx" },
+                "3": { "name": "entity.name.function.preprocessor.netlinx" },
+                "5": { "name": "punctuation.definition.parameters.netlinx" },
+                "6": { "name": "variable.parameter.preprocessor.netlinx" },
+                "8": { "name": "punctuation.separator.parameters.netlinx" },
+                "9": { "name": "punctuation.definition.parameters.netlinx" }
             },
             "end": "(?=(?://|/\\*))|$",
             "name": "meta.preprocessor.macro.netlinx",
@@ -97,24 +60,14 @@
                     "match": "(?>\\\\\\s*\\n)",
                     "name": "punctuation.separator.continuation.netlinx"
                 },
-                {
-                    "include": "$base"
-                }
+                { "include": "$base" }
             ]
         },
-        {
-            "include": "#pragma-mark"
-        },
-        {
-            "include": "#block"
-        },
+        { "include": "#pragma-mark" },
+        { "include": "#block" },
         {
             "begin": "(?i)\\s*\\b(define_function)\\b\\s+",
-            "beginCaptures": {
-                "1": {
-                    "name": "keyword.control.define.netlinx"
-                }
-            },
+            "beginCaptures": { "1": { "name": "keyword.control.define.netlinx" } },
             "comment": "function name",
             "end": "\\)",
             "patterns": [
@@ -123,30 +76,22 @@
                     "match": "(?i)\\b([a-z_]\\w*)\\b(?=\\s*\\()",
                     "name": "entity.name.function.netlinx"
                 },
-                {
-                    "include": "#netlinx_keywords"
-                },
+                { "include": "#netlinx_keywords" },
                 {
                     "comment": "type/variable pairs where type is user-defined (a struct)",
                     "match": "(?i)([a-z_][a-z0-9_]*)(?=\\s+)",
                     "name": "support.type.user.netlinx"
                 },
-                {
-                    "include": "#netlinx_variables"
-                }
+                { "include": "#netlinx_variables" }
             ]
         },
-        {
-            "include": "#netlinx_keywords"
-        },
+        { "include": "#netlinx_keywords" },
         {
             "comment": "user function names (alphanumeric before parenthesis)",
             "match": "(?i)(?i)\\b([a-z_][a-z0-9_]*)\\b(?=\\s*\\()",
             "name": "support.function.user.netlinx"
         },
-        {
-            "include": "#netlinx_variables"
-        }
+        { "include": "#netlinx_variables" }
     ],
     "repository": {
         "access": {
@@ -157,74 +102,42 @@
             "begin": "\\{",
             "end": "\\}",
             "name": "meta.block.netlinx",
-            "patterns": [
-                {
-                    "include": "#block_innards"
-                }
-            ]
+            "patterns": [ { "include": "#block_innards" } ]
         },
         "block_innards": {
             "patterns": [
-                {
-                    "include": "#preprocessor-rule-enabled-block"
-                },
-                {
-                    "include": "#preprocessor-rule-disabled-block"
-                },
-                {
-                    "include": "#preprocessor-rule-other-block"
-                },
-                {
-                    "include": "#access"
-                },
+                { "include": "#preprocessor-rule-enabled-block" },
+                { "include": "#preprocessor-rule-disabled-block" },
+                { "include": "#preprocessor-rule-other-block" },
+                { "include": "#access" },
                 {
                     "captures": {
-                        "1": {
-                            "name": "variable.other.netlinx"
-                        },
-                        "2": {
-                            "name": "punctuation.definition.parameters.netlinx"
-                        }
+                        "1": { "name": "variable.other.netlinx" },
+                        "2": { "name": "punctuation.definition.parameters.netlinx" }
                     },
                     "match": "(?x)\n\t\t\t        (?x)\n\t\t\t(?:\n\t\t\t     (?: (?= \\s )           (?<!else|return) (?<=\\w)\\s+      #  or word + space before name\n\t\t\t     )\n\t\t\t)\n\t\t\t(\n\t\t\t\t(?: [A-Za-z_][A-Za-z0-9_]*+ | :: )++    |              # actual name\n\t\t\t\t(?: (?<=operator) (?: [-*&<>=+!]+ | \\(\\) | \\[\\] ) )?  # if it is a NetLinx operator\n\t\t\t)\n\t\t\t \\s*(\\()",
                     "name": "meta.initialization.netlinx"
                 },
-                {
-                    "include": "#block"
-                },
-                {
-                    "include": "$base"
-                }
+                { "include": "#block" },
+                { "include": "$base" }
             ]
         },
         "comments": {
             "patterns": [
                 {
-                    "captures": {
-                        "1": {
-                            "name": "meta.toc-list.banner.block.netlinx"
-                        }
-                    },
+                    "captures": { "1": { "name": "meta.toc-list.banner.block.netlinx" } },
                     "match": "^/\\* =(\\s*.*?)\\s*= \\*/$\\n?",
                     "name": "comment.block.netlinx"
                 },
                 {
                     "begin": "/\\*",
-                    "captures": {
-                        "0": {
-                            "name": "punctuation.definition.comment.netlinx"
-                        }
-                    },
+                    "captures": { "0": { "name": "punctuation.definition.comment.netlinx" } },
                     "end": "\\*/",
                     "name": "comment.block.netlinx"
                 },
                 {
                     "begin": "\\(\\*",
-                    "captures": {
-                        "0": {
-                            "name": "punctuation.definition.comment.netlinx"
-                        }
-                    },
+                    "captures": { "0": { "name": "punctuation.definition.comment.netlinx" } },
                     "comment": "Netlinx parenthesis comments.",
                     "end": "\\*\\)",
                     "name": "comment.block.netlinx"
@@ -234,21 +147,13 @@
                     "name": "invalid.illegal.stray-comment-end.netlinx"
                 },
                 {
-                    "captures": {
-                        "1": {
-                            "name": "meta.toc-list.banner.line.netlinx"
-                        }
-                    },
+                    "captures": { "1": { "name": "meta.toc-list.banner.line.netlinx" } },
                     "match": "^// =(\\s*.*?)\\s*=\\s*$\\n?",
                     "name": "comment.line.banner.netlinx"
                 },
                 {
                     "begin": "//",
-                    "beginCaptures": {
-                        "0": {
-                            "name": "punctuation.definition.comment.netlinx"
-                        }
-                    },
+                    "beginCaptures": { "0": { "name": "punctuation.definition.comment.netlinx" } },
                     "end": "$\\n?",
                     "name": "comment.line.double-slash.netlinx",
                     "patterns": [
@@ -265,20 +170,12 @@
             "comment": "eat nested preprocessor if(def)s",
             "end": "^\\s*#\\s*endif\\b.*$",
             "patterns": [
-                {
-                    "include": "#disabled"
-                },
-                {
-                    "include": "#pragma-mark"
-                }
+                { "include": "#disabled" },
+                { "include": "#pragma-mark" }
             ]
         },
         "dps_variables": {
-            "captures": {
-                "1": {
-                    "name": "support.variable.system.dps.dot-access.netlinx"
-                }
-            },
+            "captures": { "1": { "name": "support.variable.system.dps.dot-access.netlinx" } },
             "match": "(?i)[a-z0-9_]+\\.\\b(number|port|system)\\b"
         },
         "netlinx_constants": {
@@ -349,12 +246,8 @@
                 },
                 {
                     "captures": {
-                        "1": {
-                            "name": "support.type.system.netlinx"
-                        },
-                        "2": {
-                            "name": "support.variable.system.netlinx"
-                        }
+                        "1": { "name": "support.type.system.netlinx" },
+                        "2": { "name": "support.variable.system.netlinx" }
                     },
                     "comment": "Data Type Keywords",
                     "match": "(?i)\\b(char|widechar|integer|sinteger|long|slong|float|double|dev|devchan)\\b\\s+([a-z_]\\w*)\\b(?!\\()"
@@ -484,12 +377,8 @@
                     "match": "(?i)\\b(cancel_all_wait|cancel_all_wait_until|cancel_wait|cancel_wait_until|pause_all_wait|pause_wait|restart_all_wait|restart_wait|wait|wait_until|timed_wait_until)\\b",
                     "name": "support.function.wait.netlinx"
                 },
-                {
-                    "include": "#dps_variables"
-                },
-                {
-                    "include": "#netlinx_constants"
-                }
+                { "include": "#dps_variables" },
+                { "include": "#netlinx_constants" }
             ]
         },
         "netlinx_variables": {
@@ -501,23 +390,13 @@
             "begin": "\\(",
             "end": "\\)",
             "name": "meta.parens.netlinx",
-            "patterns": [
-                {
-                    "include": "$base"
-                }
-            ]
+            "patterns": [ { "include": "$base" } ]
         },
         "pragma-mark": {
             "captures": {
-                "1": {
-                    "name": "meta.preprocessor.netlinx"
-                },
-                "2": {
-                    "name": "keyword.control.import.pragma.netlinx"
-                },
-                "3": {
-                    "name": "meta.toc-list.pragma-mark.netlinx"
-                }
+                "1": { "name": "meta.preprocessor.netlinx" },
+                "2": { "name": "keyword.control.import.pragma.netlinx" },
+                "3": { "name": "meta.toc-list.pragma-mark.netlinx" }
             },
             "match": "^\\s*(#\\s*(pragma\\s+mark)\\s+(.*))",
             "name": "meta.section"
@@ -525,46 +404,28 @@
         "preprocessor-rule-disabled": {
             "begin": "^\\s*(#(if)\\s+(0)\\b).*",
             "captures": {
-                "1": {
-                    "name": "meta.preprocessor.netlinx"
-                },
-                "2": {
-                    "name": "keyword.control.import.if.netlinx"
-                },
-                "3": {
-                    "name": "constant.numeric.preprocessor.netlinx"
-                }
+                "1": { "name": "meta.preprocessor.netlinx" },
+                "2": { "name": "keyword.control.import.if.netlinx" },
+                "3": { "name": "constant.numeric.preprocessor.netlinx" }
             },
             "end": "^\\s*(#\\s*(endif)\\b)",
             "patterns": [
                 {
                     "begin": "^\\s*(#\\s*(else)\\b)",
                     "captures": {
-                        "1": {
-                            "name": "meta.preprocessor.netlinx"
-                        },
-                        "2": {
-                            "name": "keyword.control.import.else.netlinx"
-                        }
+                        "1": { "name": "meta.preprocessor.netlinx" },
+                        "2": { "name": "keyword.control.import.else.netlinx" }
                     },
                     "end": "(?=^\\s*#\\s*endif\\b.*$)",
-                    "patterns": [
-                        {
-                            "include": "$base"
-                        }
-                    ]
+                    "patterns": [ { "include": "$base" } ]
                 },
                 {
                     "begin": "",
                     "end": "(?=^\\s*#\\s*(else|endif)\\b.*$)",
                     "name": "comment.block.preprocessor.if-branch",
                     "patterns": [
-                        {
-                            "include": "#disabled"
-                        },
-                        {
-                            "include": "#pragma-mark"
-                        }
+                        { "include": "#disabled" },
+                        { "include": "#pragma-mark" }
                     ]
                 }
             ]
@@ -572,46 +433,28 @@
         "preprocessor-rule-disabled-block": {
             "begin": "^\\s*(#(if)\\s+(0)\\b).*",
             "captures": {
-                "1": {
-                    "name": "meta.preprocessor.netlinx"
-                },
-                "2": {
-                    "name": "keyword.control.import.if.netlinx"
-                },
-                "3": {
-                    "name": "constant.numeric.preprocessor.netlinx"
-                }
+                "1": { "name": "meta.preprocessor.netlinx" },
+                "2": { "name": "keyword.control.import.if.netlinx" },
+                "3": { "name": "constant.numeric.preprocessor.netlinx" }
             },
             "end": "^\\s*(#\\s*(endif)\\b)",
             "patterns": [
                 {
                     "begin": "^\\s*(#\\s*(else)\\b)",
                     "captures": {
-                        "1": {
-                            "name": "meta.preprocessor.netlinx"
-                        },
-                        "2": {
-                            "name": "keyword.control.import.else.netlinx"
-                        }
+                        "1": { "name": "meta.preprocessor.netlinx" },
+                        "2": { "name": "keyword.control.import.else.netlinx" }
                     },
                     "end": "(?=^\\s*#\\s*endif\\b.*$)",
-                    "patterns": [
-                        {
-                            "include": "#block_innards"
-                        }
-                    ]
+                    "patterns": [ { "include": "#block_innards" } ]
                 },
                 {
                     "begin": "",
                     "end": "(?=^\\s*#\\s*(else|endif)\\b.*$)",
                     "name": "comment.block.preprocessor.if-branch.in-block",
                     "patterns": [
-                        {
-                            "include": "#disabled"
-                        },
-                        {
-                            "include": "#pragma-mark"
-                        }
+                        { "include": "#disabled" },
+                        { "include": "#pragma-mark" }
                     ]
                 }
             ]
@@ -619,130 +462,78 @@
         "preprocessor-rule-enabled": {
             "begin": "^\\s*(#(if)\\s+(0*1)\\b)",
             "captures": {
-                "1": {
-                    "name": "meta.preprocessor.netlinx"
-                },
-                "2": {
-                    "name": "keyword.control.import.if.netlinx"
-                },
-                "3": {
-                    "name": "constant.numeric.preprocessor.netlinx"
-                }
+                "1": { "name": "meta.preprocessor.netlinx" },
+                "2": { "name": "keyword.control.import.if.netlinx" },
+                "3": { "name": "constant.numeric.preprocessor.netlinx" }
             },
             "end": "^\\s*(#\\s*(endif)\\b)",
             "patterns": [
                 {
                     "begin": "^\\s*(#\\s*(else)\\b).*",
                     "captures": {
-                        "1": {
-                            "name": "meta.preprocessor.netlinx"
-                        },
-                        "2": {
-                            "name": "keyword.control.import.else.netlinx"
-                        }
+                        "1": { "name": "meta.preprocessor.netlinx" },
+                        "2": { "name": "keyword.control.import.else.netlinx" }
                     },
                     "contentName": "comment.block.preprocessor.else-branch",
                     "end": "(?=^\\s*#\\s*endif\\b.*$)",
                     "patterns": [
-                        {
-                            "include": "#disabled"
-                        },
-                        {
-                            "include": "#pragma-mark"
-                        }
+                        { "include": "#disabled" },
+                        { "include": "#pragma-mark" }
                     ]
                 },
                 {
                     "begin": "",
                     "end": "(?=^\\s*#\\s*(else|endif)\\b.*$)",
-                    "patterns": [
-                        {
-                            "include": "$base"
-                        }
-                    ]
+                    "patterns": [ { "include": "$base" } ]
                 }
             ]
         },
         "preprocessor-rule-enabled-block": {
             "begin": "^\\s*(#(if)\\s+(0*1)\\b)",
             "captures": {
-                "1": {
-                    "name": "meta.preprocessor.netlinx"
-                },
-                "2": {
-                    "name": "keyword.control.import.if.netlinx"
-                },
-                "3": {
-                    "name": "constant.numeric.preprocessor.netlinx"
-                }
+                "1": { "name": "meta.preprocessor.netlinx" },
+                "2": { "name": "keyword.control.import.if.netlinx" },
+                "3": { "name": "constant.numeric.preprocessor.netlinx" }
             },
             "end": "^\\s*(#\\s*(endif)\\b)",
             "patterns": [
                 {
                     "begin": "^\\s*(#\\s*(else)\\b).*",
                     "captures": {
-                        "1": {
-                            "name": "meta.preprocessor.netlinx"
-                        },
-                        "2": {
-                            "name": "keyword.control.import.else.netlinx"
-                        }
+                        "1": { "name": "meta.preprocessor.netlinx" },
+                        "2": { "name": "keyword.control.import.else.netlinx" }
                     },
                     "contentName": "comment.block.preprocessor.else-branch.in-block",
                     "end": "(?=^\\s*#\\s*endif\\b.*$)",
                     "patterns": [
-                        {
-                            "include": "#disabled"
-                        },
-                        {
-                            "include": "#pragma-mark"
-                        }
+                        { "include": "#disabled" },
+                        { "include": "#pragma-mark" }
                     ]
                 },
                 {
                     "begin": "",
                     "end": "(?=^\\s*#\\s*(else|endif)\\b.*$)",
-                    "patterns": [
-                        {
-                            "include": "#block_innards"
-                        }
-                    ]
+                    "patterns": [ { "include": "#block_innards" } ]
                 }
             ]
         },
         "preprocessor-rule-other": {
             "begin": "^\\s*(#\\s*(if(n?def)?)\\b.*?(?:(?=(?://|/\\*))|$))",
             "captures": {
-                "1": {
-                    "name": "meta.preprocessor.netlinx"
-                },
-                "2": {
-                    "name": "keyword.control.import.netlinx"
-                }
+                "1": { "name": "meta.preprocessor.netlinx" },
+                "2": { "name": "keyword.control.import.netlinx" }
             },
             "end": "^\\s*(#\\s*(endif)\\b).*$",
-            "patterns": [
-                {
-                    "include": "$base"
-                }
-            ]
+            "patterns": [ { "include": "$base" } ]
         },
         "preprocessor-rule-other-block": {
             "begin": "^\\s*(#\\s*(if(n?def)?)\\b.*?(?:(?=(?://|/\\*))|$))",
             "captures": {
-                "1": {
-                    "name": "meta.preprocessor.netlinx"
-                },
-                "2": {
-                    "name": "keyword.control.import.netlinx"
-                }
+                "1": { "name": "meta.preprocessor.netlinx" },
+                "2": { "name": "keyword.control.import.netlinx" }
             },
             "end": "^\\s*(#\\s*(endif)\\b).*$",
-            "patterns": [
-                {
-                    "include": "#block_innards"
-                }
-            ]
+            "patterns": [ { "include": "#block_innards" } ]
         },
         "string_placeholder": {
             "patterns": [
